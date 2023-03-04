@@ -1,0 +1,79 @@
+
+//  ---------------------------------------MD.SHAHRIA SARKER SHUVO -------------------------------------
+//  -----------------------------------CSE North South University---------------------------------------
+/*
+void sieve(ll n)
+{
+    isprime.assign(n+1,true);
+    isprime[0]=isprime[1]=false;
+    for(ll i=2;i*i<=n;i++)
+    {
+        if(!isprime[i])
+            continue;
+        for(int j=i*i;j<=n;j+=i)
+            isprime[j]=false;
+
+    }
+    for(ll i=2;i<=n;i++)
+    {
+        if(isprime[i])
+            primegula.pb(i);
+    }
+}
+*/
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fastkor ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
+#define endl '\n'
+#define ll long long int
+
+#define dvect vector<int>vect
+#define pb(x) push_back(x)
+#define vectinL(n) for(ll i=0;i<n;i++){ ll x; cin >> x; vect.push_back(x);}
+#define vectin(n) for(int i=0;i<n;i++){ int x; cin >> x; vect.push_back(x);}
+#define vectout for(auto v: vect) cout<<v<<" "; cout<<endl;
+#define sortkor(x) sort(x.begin(),x.end())
+#define reversekor(x) reverse(x.begin(),x.end())
+
+#define mini_pos(a)    ( min_element((a).begin(), (a).end()) - (a).begin())
+#define maxi_pos(a)    ( max_element((a).begin(), (a).end()) - (a).begin())
+
+#define F first
+#define S second
+#define YES cout<<"YES\n"
+#define YES1 cout<<"Case "<<case++<<": YES\n"
+#define NO cout<<"NO\n"
+#define NO1 cout<<"Case "<<case++<<": NO\n"
+#define precision(n) fixed<<setprecision(n)
+#define testcase ll t;cin >>t; while(t--)
+const int N=1e5+10;
+int a[N];
+int dp[N];
+int jump(int n)
+{
+
+    if(n==0)return 0;
+    if(dp[n]!=-1)
+        return dp[n];
+       int cost=INT_MAX;
+    cost=min(cost,jump(n-1)+(abs(a[n]-a[n-1])));/// If 1 jump
+    if(n>1)
+        cost=min(cost,jump(n-2)+(abs(a[n]-a[n-2])));/// If 2 jump
+
+    return dp[n]=cost;
+
+}
+int main()
+{
+    memset(dp,-1,sizeof(dp));
+    int n;
+    cin >> n;
+    for(int i=0; i<n; i++)
+    {
+        cin >>a[i];
+    }
+    cout<<jump(n-1);
+
+
+}
