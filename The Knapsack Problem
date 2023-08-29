@@ -1,0 +1,94 @@
+// ----------------------------------------SHAHRIA SARKER SHUVO -----------------------------------------
+//-------------------------------------CSE North South University----------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fastkor ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
+#define endl '\n'
+#define ll long long
+
+#define dvect vector<int>vect
+#define pb(x) push_back(x)
+#define vectinL(n) for(ll i=0;i<n;i++){ ll x; cin >> x; vect.push_back(x);}
+#define vectin(n) for(int i=0;i<n;i++){ int x; cin >> x; vect.push_back(x);}
+#define vectout(v) for(auto p: v) cout<<p<<" "; cout<<endl;
+#define sortkor(x) sort(x.begin(),x.end())
+#define reversekor(x) reverse(x.begin(),x.end())
+#define all(vect) vect.begin(),vect.end()
+#define mini_pos(a)    ( min_element((a).begin(), (a).end()) - (a).begin())
+#define maxi_pos(a)    ( max_element((a).begin(), (a).end()) - (a).begin())
+
+#define F first
+#define S second
+#define gcd(a,b) __gcd(a,b)
+#define YES1 cout<<"Case "<<case++<<": YES\n"
+#define NO1 cout<<"Case "<<case++<<": NO\n"
+#define precision(n) fixed<<setprecision(n)
+#define testcase ll t; cin >>t; while(t--)
+
+#define yes cout<<"yes\n";
+#define Yes cout<<Yes\n";
+#define YES cout<<"YES\n";
+
+#define no cout<<"no\n";
+#define No cout<<"No\n";
+#define NO cout<<"NO\n";
+vector<bool>isprime;
+vector<int>primegula;
+void sieve(ll n)
+{
+    isprime.assign(n+1,true);
+    isprime[0]=isprime[1]=false;
+    for(ll i=2; i*i<=n; i++)
+    {
+        if(!isprime[i])
+            continue;
+        for(int j=i*i; j<=n; j+=i)
+            isprime[j]=false;
+
+    }
+    for(ll i=2; i<=n; i++)
+    {
+        if(isprime[i])
+            primegula.pb(i);
+    }
+}
+
+int knapsack(vector<int>&sz, vector<int>&val, int ind, int capa,vector<vector<int>>&dp)
+{
+    if(ind==0)
+    {
+        if(sz[0]>capa) return 0;
+        else
+            return val[0];
+    }
+    if(dp[ind][capa]!=-1) return dp[ind][capa];
+    int in=0;
+
+    if(sz[ind]<=capa)
+        in=val[ind]+knapsack(sz,val,ind-1,capa-sz[ind],dp);
+
+    int ex=knapsack(sz,val,ind-1,capa,dp);
+
+    dp[ind][capa]=max(in,ex);
+    return dp[ind][capa];
+}
+int main()
+{
+    fastkor;
+    ll a,b;
+  cin >> a >> b;
+
+  vector<int>sz;
+  vector<int>val;
+
+   vector<vector<int>>dp(b,vector<int>(a+1,-1));
+  for(int i=0;i<b;i++)
+  {
+      int x,y;
+      cin >> x >> y;
+      sz.pb(x);
+      val.pb(y);
+  }
+  cout<<knapsack(sz,val,b-1,a,dp);
+}
